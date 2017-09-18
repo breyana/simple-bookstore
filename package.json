@@ -2,7 +2,7 @@
   "name": "simple-bookstore",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server/server.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:init": "psql < seeds/schema.sql && psql < seeds/load_data.sql",
