@@ -5,4 +5,4 @@ const getAllBooks = function() {
     .catch(error => console.error)
 }
 
-module.exports = getAllBooks
+module.exports = { getAllBooks }
