@@ -1,7 +1,11 @@
 const app = require('express')();
-const routes = require('./routes')
+const routes = require('./server/routes')
+const middleware = require('./server/middleware')
 
 app.set('view engine', 'ejs')
+app.set('views', __dirname + '/views')
+
+app.use(middleware)
 
 app.use(routes)
 
