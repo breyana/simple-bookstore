@@ -1,6 +1,11 @@
 <%- include ../partials/header.ejs %>
 
 <ul class="book-list" id="homepage-books">
+  <% if(books){ %>
+    <% books.forEach(function(book) { %>
+      <li><img src=<%=book.img_url%>></li>
+    <% }) %>
+  <% } %>
 </ul>
 
 <ul class="book-list" id="search-books">
