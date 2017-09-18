@@ -2,10 +2,11 @@
   "name": "simple-bookstore",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:init": "psql < seeds/schema.sql && psql < seeds/load_data.sql"
+    "db:init": "psql < seeds/schema.sql && psql < seeds/load_data.sql",
+    "start": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/breyana/simple-bookstore#readme",
   "dependencies": {
     "body-parser": "^1.18.1",
+    "ejs": "^2.5.7",
     "express": "^4.15.4",
     "nodemon": "^1.12.1",
     "pg-promise": "^6.7.1"
