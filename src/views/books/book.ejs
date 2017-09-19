@@ -1,0 +1,21 @@
+<%- include ../partials/header.ejs %>
+
+  <% if (book) { %>
+    <img id="single-book-img" src=<%=book.img_url%>>
+    <div id="single-book-info">
+      <div id="single-book-title"><%=book.title%></div>
+      <div id="single-book-author">By <%=book.first_name%> <%=book.last_name%></div>
+      <div id="single-book-genres">Genre(s): <%=book.genres%></div>
+    </div>
+    <div id="single-book-purchase-info">
+      <div id="single-book-price"><%=book.price%></div>
+      <div id="single-book-in-stock"><%=book.in_stock%></div>
+      <button id="add-to-cart">Add to Cart</button>
+    </div>
+    <div id="single-book-isbn-publisher">
+      <div id="single-book-isbn"><%=book.isbn%></div>
+      <div id="single-book-publisher"><%=book.publisher%></div>
+    </div>
+  <% } %>
+
+<%- include ../partials/footer.ejs %>

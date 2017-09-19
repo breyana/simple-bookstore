@@ -3,7 +3,7 @@
 <ul class="book-list" id="homepage-books">
   <% if(books){ %>
     <% books.forEach(function(book) { %>
-      <li><img src=<%=book.img_url%>></li>
+      <li><a href='/books/<%=book.id%>'><img src=<%=book.img_url%>></a></li>
     <% }) %>
   <% } %>
 </ul>
