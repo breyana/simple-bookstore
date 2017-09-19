@@ -5,6 +5,11 @@ const getAllBooks = () => {
     .catch(error => console.error(error))
 }
 
+const getAllBookImages = () => {
+  return db.query('SELECT img_url FROM books')
+    .catch(error => console.error(error))
+}
+
 const getOneBook = id => {
   return db.query(`
     SELECT title, price, img_url, in_stock, isbn, publisher, first_name, last_name, string_agg(genres.name, ', ') AS genres FROM books
@@ -21,5 +26,6 @@ const getOneBook = id => {
 
 module.exports = {
   getAllBooks,
+  getAllBookImages,
   getOneBook
  }
