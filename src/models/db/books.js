@@ -6,7 +6,7 @@ const getAllBooks = () => {
 }
 
 const getAllBookImages = () => {
-  return db.query('SELECT img_url FROM books')
+  return db.query('SELECT id, img_url FROM books')
     .catch(error => console.error(error))
 }
 
