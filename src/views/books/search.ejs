@@ -1,0 +1,24 @@
+<%- include ../partials/header.ejs %>
+
+<ul class="book-list" id="search-books">
+  <% if(books){ %>
+    <% books.forEach(function(book) { %>
+      <li>
+        <a href="/books/<%=book.id%>">
+          <img src=<%=book.img_url%>>
+          <div id="search-title">
+            <%=book.title%>
+          </div>
+        </a>
+        <div id="search-author">
+          <%=book.first_name%> <%=book.last_name%>
+        </div>
+        <div id="search-price">
+          <%=book.price%>
+        </div>
+      </li>
+    <% }) %>
+  <% } %>
+</ul>
+
+<%- include ../partials/footer.ejs %>
