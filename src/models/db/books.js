@@ -5,7 +5,7 @@ const getAllBooks = () => {
     .catch(error => console.error(error))
 }
 
-const getAllBookImages = () => {
+const getAllBookIdImages = () => {
   return db.query('SELECT id, img_url FROM books')
     .catch(error => console.error(error))
 }
@@ -42,7 +42,7 @@ const searchForBooks = searchTerm => {
 
 module.exports = {
   getAllBooks,
-  getAllBookImages,
+  getAllBookIdImages,
   getOneBook,
   searchForBooks
  }
