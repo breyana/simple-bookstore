@@ -19,4 +19,7 @@ const getOneBook = id => {
     .catch(error => console.error(error))
 }
 
-module.exports = { getAllBooks }
+module.exports = {
+  getAllBooks,
+  getOneBook
+ }
