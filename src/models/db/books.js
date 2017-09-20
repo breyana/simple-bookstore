@@ -41,6 +41,38 @@ const searchForBooks = (searchTerm, offset) => {
     .catch(error => console.error(error))
 }
 
+const updateBookGenres = (newGenreName, bookId, oldGenreName) => {
+  return db.tx(transaction => {
+    return transaction.oneOrNone('SELECT id FROM genres WHERE name = $1 RETURNING id', [newGenreName])
+      .then(genreId => {
+        if (!genreId) {
+          return transaction.query(`
+            INSERT INTO genres(name) VALUES $1;
+            UPDATE genres_books SET genre_id = (SELECT id FROM genres WHERE name = $1)
+	          WHERE genres_books.book_id = $2
+	          AND genres_books.genre_id = (SELECT id FROM genres WHERE name = $3);
+            `, [newGenreName, bookId, oldGenreName])
+        } else {
+          return transaction.query(`
+            UPDATE genres_books SET genre_id = (SELECT id FROM genres WHERE name = $1)
+	          WHERE genres_books.book_id = $2
+	          AND genres_books.genre_id = (SELECT id FROM genres WHERE name = $3);
+            `, [newGenreName, bookId, oldGenreName])
+        }
+      })
+      .catch(error => {
+        console.error({message: 'UpdateBookGenres Inner Transaction failed',
+                      arguments: arguments})
+        throw error
+      })
+  })
+  .catch(error => {
+    console.error({message: 'UpdateBookGenres Outer Transaction failed',
+                  arguments: arguments})
+    throw error
+  })
+}
+
 module.exports = {
   getAllBooks,
   getAllBookIdImages,
