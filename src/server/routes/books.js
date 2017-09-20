@@ -17,6 +17,14 @@ router.get('/search', (request, response) => {
     })
 })
 
+router.get('/:id/edit', (request, response) => {
+  const id = request.params.id
+  books.getOneBook(id)
+    .then(book => {
+      response.render('books/edit', { book })
+    })
+})
+
 router.get('/:id', (request, response) => {
   const id = request.params.id
   books.getOneBook(id)
