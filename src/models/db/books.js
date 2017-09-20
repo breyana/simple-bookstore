@@ -73,6 +73,38 @@ const updateBookGenres = (newGenreName, bookId, oldGenreName) => {
   })
 }
 
+const updateBookAuthor = (newFirstName, newLastName, bookId, oldLastName, oldFirstName) => {
+  return db.tx(transaction => {
+    return transaction.oneOrNone('SELECT id FROM authors WHERE first_name = $1 AND last_name = $2 RETURNING id', [newFirstName, newLastName])
+      .then(authorId => {
+        if (!authorId) {
+          return transaction.query(`
+            INSERT INTO authors(first_name, last_name) VALUES($1, $2);
+            UPDATE authors_books SET author_id = (SELECT id FROM authors WHERE first_name = $1 AND last_name = $2)
+	          WHERE authors_books.book_id = $3
+	          AND authors_books.author_id = (SELECT id FROM authors WHERE first_name = $4 AND last_name = $5);
+            `, [newFirstName, newLastName, bookId, oldFirstName, oldLastName])
+        } else {
+          return transaction.query(`
+            UPDATE authors_books SET author_id = (SELECT id FROM authors WHERE first_name = $1 AND last_name = $2)
+	          WHERE authors_books.book_id = $3
+	          AND authors_books.author_id = (SELECT id FROM authors WHERE first_name = $4 AND last_name = $5);
+            `, [newFirstName, newLastName, bookId, oldFirstName, oldLastName])
+        }
+      })
+      .catch(error => {
+        console.error({message: 'UpdateBookGenres Inner Transaction failed',
+                      arguments: arguments})
+        throw error
+      })
+  })
+  .catch(error => {
+    console.error({message: 'UpdateBookGenres Outer Transaction failed',
+                  arguments: arguments})
+    throw error
+  })
+}
+
 module.exports = {
   getAllBooks,
   getAllBookIdImages,
