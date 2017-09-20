@@ -13,7 +13,7 @@ router.get('/search', (request, response) => {
   }
   books.searchForBooks(searchTerm, offset)
     .then(books => {
-      response.render('books/search', { books })
+      response.render('books/search', { books, searchTerm: request.query.search, offset })
     })
 })
 

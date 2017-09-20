@@ -18,6 +18,21 @@
         </div>
       </li>
     <% }) %>
+    <% offset = parseInt(offset)%>
+    <% if (offset >= 10) { %>
+      <% let previous = offset - 10 %>
+      <div id="search-next-page">
+        <a href="search?search=<%=searchTerm%>&amp;start=<%=previous%>">
+          Prev Page
+        </a>
+      </div>
+    <% } %>
+    <% offset += 10 %>
+    <div id="search-next-page">
+      <a href="search?search=<%=searchTerm%>&amp;start=<%=offset%>">
+        Next Page
+      </a>
+    </div>
   <% } %>
 </ul>
 
