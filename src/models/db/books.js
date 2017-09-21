@@ -142,6 +142,13 @@ const deleteBook = (id) => {
     .catch(error => console.log(error))
 }
 
+const createBook = (title, imgUrl, price, inStock, isbn, publisher) => {
+  return db.query(`
+    INSERT INTO books(title, img_url, price, in_stock, isbn, publisher)
+    VALUES($1, $2, $3, $4, $5, $6) RETURNING id
+  `, [title, imgUrl, price, inStock, isbn, publisher] )
+}
+
 module.exports = {
   getAllBooks,
   getAllBookIdImages,
