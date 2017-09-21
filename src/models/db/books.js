@@ -144,5 +144,6 @@ module.exports = {
   searchForBooks,
   updateBookGenres,
   updateBookAuthor,
-  updateBooks
+  updateBooks,
+  getAllGenres
  }
