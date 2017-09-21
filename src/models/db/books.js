@@ -132,6 +132,11 @@ const updateBooks = (bookId, title, imgUrl, price, inStock, isbn, publisher) => 
   .catch(error => console.log(error))
 }
 
+const getAllGenres = () => {
+  return db.query(`SELECT name FROM genres`)
+    .catch(error => console.log(error))
+}
+
 module.exports = {
   getAllBooks,
   getAllBookIdImages,
