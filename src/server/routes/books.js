@@ -21,7 +21,10 @@ router.get('/:id/edit', (request, response) => {
   const id = request.params.id
   books.getOneBook(id)
     .then(book => {
-      response.render('books/edit', { book })
+      books.getAllGenres()
+        .then(allGenres => {
+          response.render('books/edit', { book, allGenres })
+        })
     })
 })
 
