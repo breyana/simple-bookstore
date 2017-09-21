@@ -1,0 +1,35 @@
+<%- include ../partials/header.ejs %>
+
+  <% if (!book) {%>
+    <h1>Create Book</h1>
+    <form method="POST" action="/books/create">
+      Title: <input name="title">
+      Image URL: <input name="imgUrl">
+      Price: <input name="price">
+      In Stock: <input name="inStock">
+      ISBN: <input name="isbn">
+      Publisher: <input name="publisher">
+      <input type="submit" value="Submit">
+    </form>
+  <% } %>
+  <% if (book) {%>
+    <h1>Author</h1>
+    <form method="POST" action="/books/create">
+      First Name: <input name="firstName">
+      Last Name: <input name="lastName">
+      Book ID: <input name="bookId" value=<%=book.id%> readonly>
+      <input type="submit" value="Submit">
+    </form>
+  <% } %>
+  <% if (book && author) { %>
+    <h1>Genres</h1>
+    <form id="genres-form" method="POST" action="/books/create">
+      <input name="genre0">
+      Book ID: <input name="bookId" value=<%=book.id%> readonly>
+      <input type="submit" value="Submit">
+    </form>
+    <button id="add-genre">Add Another Genre</button>
+  <% } %>
+
+
+<%- include ../partials/footer.ejs %>
