@@ -1,5 +1,46 @@
-<%- include ../partials/header.ejs %>
+<% include ../partials/header.ejs %>
 
+  <% if (book) {%>
+      <img  id="edit-book-image" src=<%=book.img_url%>>
+      <form id="edit-book-form" method="PUT" action="/books/<%=book.id%>/edit">
+        <div>
+          Title: <input name="title" value="<%=book.title%>">
+        </div>
+        <div>
+          Image Link: <input name="imgUrl" value="<%=book.img_url%>">
+        </div>
+        <div>
+          Price: <input name="price" value="<%=book.price%>">
+        </div>
+        <div>
+          How Much In Stock: <input name="inStock" value="<%=book.in_stock%>">
+        </div>
+        <div>
+          ISBN: <input name="isbn" value="<%=book.isbn%>">
+        </div>
+        <div>
+          Publisher: <input name="publisher" value="<%=book.publisher%>">
+        </div>
+        <div>Author</div>
+        <div>
+          First Name: <input name="firstName" value="<%=book.first_name%>">
+        </div>
+        <div>
+          Last Name: <input name="lastName" value="<%=book.last_name%>">
+        </div>
+      <% const bookGenres = book.genres.split(', ') %>
+        <% bookGenres.forEach(function (genre, index) {%>
+          <div>
+            <input list="genre<%= index %>" value="<%=genre%>">
+            <datalist id="genre<%= index %>">
+              <% allGenres.forEach(function (genre, index) { %>
+                  <option value="<%=genre.name%>">
+              <% }) %>
+            </datalist>
+          </div>
+        <% }) %>
+        <input class="edit" type="submit" value="Edit">
+      </form>
+  <% } %>
 
-
-<%- include ../partials/footer.ejs %>
+<% include ../partials/footer.ejs %>
