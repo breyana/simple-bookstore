@@ -137,6 +137,11 @@ const getAllGenres = () => {
     .catch(error => console.log(error))
 }
 
+const deleteBook = (id) => {
+  return db.query(`DELETE FROM books WHERE id = $1`, [id])
+    .catch(error => console.log(error))
+}
+
 module.exports = {
   getAllBooks,
   getAllBookIdImages,
@@ -145,5 +150,6 @@ module.exports = {
   updateBookGenres,
   updateBookAuthor,
   updateBooks,
-  getAllGenres
+  getAllGenres,
+  deleteBook
  }

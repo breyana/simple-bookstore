@@ -17,6 +17,12 @@ router.get('/search', (request, response) => {
     })
 })
 
+router.delete('/:id/delete', (request, response) => {
+  const id = request.params.id
+  books.deleteBook(id)
+    .then(result => response.redirect('/'))
+})
+
 router.get('/:id/edit', (request, response) => {
   const id = request.params.id
   books.getOneBook(id)
