@@ -17,12 +17,42 @@ router.get('/search', (request, response) => {
     })
 })
 
+router.get('/create', (request, response) => {
+  response.render('books/create')
+})
+
 router.delete('/:id/delete', (request, response) => {
   const id = request.params.id
   books.deleteBook(id)
     .then(result => {
       response.redirect('/')
     })
+})
+
+router.put('/:id/edit', (request, response) => {
+  const id = request.params.id
+  const title = request.body.title
+  const imgUrl = request.body.imgUrl
+  const price = request.body.price
+  const inStock = request.body.inStock
+  const isbn = request.body.isbn
+  const publisher = request.body.publisher
+  const oldFirstName = request.body.oldFirstName
+  const oldLastName = request.body.oldLastName
+  const firstName = request.body.firstName
+  const lastName = request.body.lastName
+  const oldGenre = request.body.oldGenre
+
+  books.updateBooks(id, title, imgUrl, price, inStock, isbn, publisher)
+    .then(() => books.updateBookAuthor(firstName, lastName, id, oldFirstName, oldLastName))
+    .catch(error => console.error(error))
+
+
+  let i = 0
+  while (request.body['genre'+ i]) {
+
+    i++
+  }
 })
 
 router.get('/:id/edit', (request, response) => {
