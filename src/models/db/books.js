@@ -79,7 +79,7 @@ const addOrEditAuthors = (bookId, authors) => {
     queries.push(
       transaction.any(`SELECT * FROM authors_books WHERE book_id = $1`, [bookId])
         .then(authorConnections => {
-          if (authorConnections) {
+          if (authorConnections.length > 0) {
             return transaction.query(`DELETE FROM authors_books WHERE book_id = $1`, [bookId])
           }
         })
@@ -107,6 +107,7 @@ const addOrEditAuthors = (bookId, authors) => {
     })
     return transaction.batch(queries)
   })
+  .then(result => console.log('addOrEditAuthors transaction complete.'))
 }
 
 const addOrEditGenres = (bookId, genres) => {
@@ -115,7 +116,7 @@ const addOrEditGenres = (bookId, genres) => {
     queries.push(
       transaction.any(`SELECT * FROM genres_books WHERE book_id = $1`, [bookId])
         .then(genreConnections => {
-          if(genreConnections) {
+          if(genreConnections.length > 0) {
             return transaction.query(`DELETE FROM genres_books WHERE book_id = $1`, [bookId])
           }
         })
@@ -140,6 +141,7 @@ const addOrEditGenres = (bookId, genres) => {
     })
     return transaction.batch(queries)
   })
+  .then(result => console.log('addOrEditGenres transaction complete.'))
 }
 
 module.exports = {
