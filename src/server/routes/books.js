@@ -37,22 +37,27 @@ router.put('/:id/edit', (request, response) => {
   const inStock = request.body.inStock
   const isbn = request.body.isbn
   const publisher = request.body.publisher
-  const oldFirstName = request.body.oldFirstName
-  const oldLastName = request.body.oldLastName
-  const firstName = request.body.firstName
-  const lastName = request.body.lastName
-  const oldGenre = request.body.oldGenre
-
-  books.updateBooks(id, title, imgUrl, price, inStock, isbn, publisher)
-    .then(() => books.updateBookAuthor(firstName, lastName, id, oldFirstName, oldLastName))
-    .catch(error => console.error(error))
-
-
+  const authors = []
+  const genres = []
   let i = 0
-  while (request.body['genre'+ i]) {
-
+  while (request.body['firstName' + i]) {
+    let author = {}
+    author.firstName = request.body['firstName' + i]
+    author.lastName = request.body['lastName' + i]
+    authors.push(author)
     i++
   }
+  let j = 0
+  while (request.body['genre' + j]) {
+    genres.push(request.body['genre' + j])
+    j++
+  }
+
+  books.updateBooks(id, title, imgUrl, price, inStock, isbn, publisher)
+    .then(() => books.addOrEditAuthors(id, authors))
+    .then(() => books.addOrEditGenres(id, genres))
+    .then(() => response.redirect(`/books/${id}`))
+    .catch(error => console.error(error))
 })
 
 router.get('/:id/edit', (request, response) => {
