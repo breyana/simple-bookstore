@@ -29,7 +29,7 @@
           <button class="remove-author-input">X</button>
           </div>
         <% }) %>
-        <button id="add-author-input">Add Author</button>
+        <button class="add-author-input">Add Author</button>
         <% book.genres.forEach(function (genre, index) {%>
           <div>
             <input list="genres" name="genre<%=index%>" value="<%=genre%>"><button class="remove-input">X</button>
@@ -40,7 +40,7 @@
             <option value="<%=genre.name%>">
           <% }) %>
         </datalist>
-        <button id="add-genre-input">Add Genre</button>
+        <button class="add-genre-input">Add Genre</button>
         <div>
           <input class="edit" type="submit" value="Edit">
           <button id="delete-book" data-id="<%=book.id%>">Delete</button>
