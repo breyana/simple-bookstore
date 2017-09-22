@@ -29,16 +29,16 @@
           Last Name: <input name="lastName" value="<%=book.last_name%>">
         </div>
       <% const bookGenres = book.genres.split(', ') %>
-        <% bookGenres.forEach(function (genre, index) {%>
+        <% bookGenres.forEach(function (genre) {%>
           <div>
-            <input list="genre<%= index %>" value="<%=genre%>">
-            <datalist id="genre<%= index %>">
-              <% allGenres.forEach(function (genre, index) { %>
-                  <option value="<%=genre.name%>">
-              <% }) %>
-            </datalist>
+            <input list="genres" value="<%=genre%>">
           </div>
         <% }) %>
+        <datalist id="genres">
+          <% allGenres.forEach(function (genre) { %>
+            <option value="<%=genre.name%>">
+          <% }) %>
+        </datalist>
         <input class="edit" type="submit" value="Edit">
       </form>
       <button id="delete-book" data-id="<%=book.id%>">Delete</button>
