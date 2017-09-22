@@ -1,8 +1,8 @@
 <% include ../partials/header.ejs %>
 
   <% if (book) {%>
-      <img  id="edit-book-image" src=<%=book.img_url%>>
-      <form id="edit-book-form" method="PUT" action="/books/<%=book.id%>/edit">
+      <img id="edit-book-image" src=<%=book.img_url%>>
+      <form id="edit-book-form" method="POST" action="/books/<%=book.id%>/edit?_method=PUT">
         <div>
           Title: <input name="title" value="<%=book.title%>">
         </div>
