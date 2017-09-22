@@ -21,17 +21,17 @@
         <div>
           Publisher: <input name="publisher" value="<%=book.publisher%>">
         </div>
-        <div>Author</div>
-        <div>
-          First Name: <input name="firstName" value="<%=book.first_name%>">
-        </div>
-        <div>
-          Last Name: <input name="lastName" value="<%=book.last_name%>">
-        </div>
-      <% const bookGenres = book.genres.split(', ') %>
-        <% bookGenres.forEach(function (genre) {%>
+        <div>Author(s)</div>
+        <% book.first_names.forEach(function (firstName, index) { %>
           <div>
-            <input list="genres" value="<%=genre%>">
+          First Name: <input name="firstName<%=index%>" value="<%=firstName%>">
+          Last Name: <input name="lastName<%=index%>" value="<%=book.last_names[index]%>">
+          <button class="remove-author-input">X</button>
+          </div>
+        <% }) %>
+        <% book.genres.forEach(function (genre, index) {%>
+          <div>
+            <input list="genres" name="genre<%=index%>" value="<%=genre%>"><button class="remove-input">X</button>
           </div>
         <% }) %>
         <datalist id="genres">
@@ -39,9 +39,12 @@
             <option value="<%=genre.name%>">
           <% }) %>
         </datalist>
-        <input class="edit" type="submit" value="Edit">
+        <button id="add-genre-input">Add Genre</button>
+        <div>
+          <input class="edit" type="submit" value="Edit">
+          <button id="delete-book" data-id="<%=book.id%>">Delete</button>
+        </div>
       </form>
-      <button id="delete-book" data-id="<%=book.id%>">Delete</button>
   <% } %>
 
 <% include ../partials/footer.ejs %>
