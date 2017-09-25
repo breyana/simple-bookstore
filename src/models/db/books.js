@@ -65,11 +65,11 @@ const deleteBook = (id) => {
     .catch(error => console.log(error))
 }
 
-const createBook = (title, book) => {
+const create = (book) => {
   return db.query(`
     INSERT INTO books(title, img_url, price, in_stock, isbn, publisher)
     VALUES($1, $2, $3, $4, $5, $6) RETURNING id
-  `, [title, book.imgUrl, book.price, book.inStock, book.isbn, book.publisher] )
+  `, [book.title, book.imgUrl, book.price, book.inStock, book.isbn, book.publisher] )
 }
 
 const addOrEditAuthors = (bookId, authors) => {
@@ -153,5 +153,6 @@ module.exports = {
   getAllGenres,
   deleteBook,
   addOrEditAuthors,
-  addOrEditGenres
+  addOrEditGenres,
+  create
  }

@@ -21,6 +21,42 @@ router.get('/create', (request, response) => {
   response.render('books/create')
 })
 
+router.post('/create', (request, response) => {
+  const compiledBook = {}
+  compiledBook.title = request.body.title
+  compiledBook.imgUrl = request.body.imgUrl
+  compiledBook.price = request.body.price
+  compiledBook.inStock = request.body.inStock
+  compiledBook.isbn = request.body.isbn
+  compiledBook.publisher = request.body.publisher
+  const authors = []
+  const genres = []
+
+
+  let i = 0
+  while (request.body['firstName' + i]) {
+    let author = {}
+    author.firstName = request.body['firstName' + i]
+    author.lastName = request.body['lastName' + i]
+    authors.push(author)
+    i++
+  }
+  let j = 0
+  while (request.body['genre' + j]) {
+    genres.push(request.body['genre' + j])
+    j++
+  }
+
+  books.create(compiledBook)
+    .then(book => {
+      books.addOrEditAuthors(book[0].id, authors)
+        .then(() => books.addOrEditGenres(book[0].id, genres))
+        .then(() => response.redirect(`/books/${book[0].id}`))
+        .catch(error => console.error(error))
+    })
+    .catch(error => console.error(error))
+})
+
 router.delete('/:id', (request, response) => {
   const id = request.params.id
   books.deleteBook(id)
