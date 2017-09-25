@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     deleteButton.addEventListener('click', function(event) {
       const bookId = deleteButton.getAttribute('data-id')
       console.log('deleting book #', bookId)
-      fetch(`/books/${bookId}/delete`, { method: 'DELETE' })
+      fetch(`/books/${bookId}`, { method: 'DELETE' })
         .then(result => {
           window.location = '/'
         })

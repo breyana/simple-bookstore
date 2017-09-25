@@ -21,7 +21,7 @@ router.get('/create', (request, response) => {
   response.render('books/create')
 })
 
-router.delete('/:id/delete', (request, response) => {
+router.delete('/:id', (request, response) => {
   const id = request.params.id
   books.deleteBook(id)
     .then(result => {
