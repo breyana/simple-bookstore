@@ -46,12 +46,12 @@ const searchForBooks = (searchTerm, offset) => {
     .catch(error => console.error(error))
 }
 
-const updateBooks = (bookId, title, imgUrl, price, inStock, isbn, publisher) => {
+const updateBook = (book) => {
   return db.query(`
     UPDATE books
     SET title = $2, img_url = $3, price = $4, in_stock = $5, isbn = $6, publisher = $7
     WHERE id = $1
-    `, [bookId, title, imgUrl, price, inStock, isbn, publisher])
+    `, [book.id, book.title, book.imgUrl, book.price, book.inStock, book.isbn, book.publisher])
   .catch(error => console.log(error))
 }
 
@@ -65,11 +65,11 @@ const deleteBook = (id) => {
     .catch(error => console.log(error))
 }
 
-const createBook = (title, imgUrl, price, inStock, isbn, publisher) => {
+const createBook = (title, book) => {
   return db.query(`
     INSERT INTO books(title, img_url, price, in_stock, isbn, publisher)
     VALUES($1, $2, $3, $4, $5, $6) RETURNING id
-  `, [title, imgUrl, price, inStock, isbn, publisher] )
+  `, [title, book.imgUrl, book.price, book.inStock, book.isbn, book.publisher] )
 }
 
 const addOrEditAuthors = (bookId, authors) => {
@@ -149,7 +149,7 @@ module.exports = {
   getAllBookIdImages,
   getOneBook,
   searchForBooks,
-  updateBooks,
+  updateBook,
   getAllGenres,
   deleteBook,
   addOrEditAuthors,

@@ -30,13 +30,14 @@ router.delete('/:id', (request, response) => {
 })
 
 router.put('/:id/edit', (request, response) => {
-  const id = request.params.id
-  const title = request.body.title
-  const imgUrl = request.body.imgUrl
-  const price = request.body.price
-  const inStock = request.body.inStock
-  const isbn = request.body.isbn
-  const publisher = request.body.publisher
+  const compiledBook = {}
+  compiledBook.id = request.params.id
+  compiledBook.title = request.body.title
+  compiledBook.imgUrl = request.body.imgUrl
+  compiledBook.price = request.body.price
+  compiledBook.inStock = request.body.inStock
+  compiledBook.isbn = request.body.isbn
+  compiledBook.publisher = request.body.publisher
   const authors = []
   const genres = []
   let i = 0
@@ -53,10 +54,10 @@ router.put('/:id/edit', (request, response) => {
     j++
   }
 
-  books.updateBooks(id, title, imgUrl, price, inStock, isbn, publisher)
-    .then(() => books.addOrEditAuthors(id, authors))
-    .then(() => books.addOrEditGenres(id, genres))
-    .then(() => response.redirect(`/books/${id}`))
+  books.updateBook(compiledBook)
+    .then(() => books.addOrEditAuthors(compiledBook.id, authors))
+    .then(() => books.addOrEditGenres(compiledBook.id, genres))
+    .then(() => response.redirect(`/books/${compiledBook.id}`))
     .catch(error => console.error(error))
 })
 
