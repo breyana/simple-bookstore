@@ -24,28 +24,28 @@
         <div>Author(s)</div>
         <% book.first_names.forEach(function (firstName, index) { %>
           <div>
-          First Name: <input name="firstName<%=index%>" value="<%=firstName%>">
-          Last Name: <input name="lastName<%=index%>" value="<%=book.last_names[index]%>">
-          <button class="remove-author-input">X</button>
+            First Name: <input name="firstName<%=index%>" value="<%=firstName%>">
+            Last Name: <input name="lastName<%=index%>" value="<%=book.last_names[index]%>">
+          <button type="button" class="remove-author-input">X</button>
           </div>
         <% }) %>
-        <button class="add-author-input">Add Author</button>
+        <button type="button" class="add-author-input">Add Author</button>
         <% book.genres.forEach(function (genre, index) {%>
           <div>
-            <input list="genres" name="genre<%=index%>" value="<%=genre%>"><button class="remove-input">X</button>
+            <input list="genres" name="genre<%=index%>" value="<%=genre%>"><button type="button" class="remove-genre-input">X</button>
           </div>
         <% }) %>
-        <datalist id="genres">
-          <% allGenres.forEach(function (genre) { %>
-            <option value="<%=genre.name%>">
-          <% }) %>
-        </datalist>
-        <button class="add-genre-input">Add Genre</button>
+        <button type="button" class="add-genre-input">Add Genre</button>
         <div>
           <input class="edit" type="submit" value="Edit">
           <button id="delete-book" data-id="<%=book.id%>">Delete</button>
         </div>
       </form>
+      <datalist id="genres">
+        <% allGenres.forEach(function (genre) { %>
+          <option value="<%=genre.name%>">
+        <% }) %>
+      </datalist>
   <% } %>
 
 <% include ../partials/footer.ejs %>
