@@ -6,11 +6,11 @@
       <div id="single-book-title"><%=book.title%></div>
       <div id="single-book-author">
         By
-        <% book.first_names.forEach(function(author, index) { %>
+        <% book.authors.forEach(function(author, index) { %>
           <% if(index > 0) { %>
-            <span>& <%=author%> <%=book.last_names[index]%></span>
+            <span>& <%=author.first_name%> <%=author.last_name%></span>
           <% } else { %>
-            <span><%=author%> <%=book.last_names[index]%></span>
+            <span><%=author.first_name%> <%=author.last_name%></span>
           <% } %>
         <% }) %>
       </div>
