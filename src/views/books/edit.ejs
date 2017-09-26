@@ -22,10 +22,10 @@
           Publisher: <input name="publisher" value="<%=book.publisher%>">
         </div>
         <div>Author(s)</div>
-        <% book.first_names.forEach(function (firstName, index) { %>
+        <% book.authors.forEach(function (author, index) { %>
           <div>
-            First Name: <input class="first_name" name="firstName<%=index%>" value="<%=firstName%>">
-            Last Name: <input class="last_name" name="lastName<%=index%>" value="<%=book.last_names[index]%>">
+            First Name: <input class="first_name" name="firstName<%=index%>" value="<%=author.first_name%>">
+            Last Name: <input class="last_name" name="lastName<%=index%>" value="<%=author.last_name%>">
           <button type="button" class="remove-author-input">X</button>
           </div>
         <% }) %>
