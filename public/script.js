@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const addAuthorButton = document.querySelector('.add-author-input')
   const removeGenreInputs = document.querySelectorAll('.remove-genre-input')
   const removeAuthorInputs = document.querySelectorAll('.remove-author-input')
+  const openCart = document.querySelector('.open-cart')
+  const modalOverlay = document.querySelector('.modal-overlay')
+  const modal = document.querySelector('.modal')
+  const closeCart = document.querySelector('.close-cart')
+  const total = document.querySelector('.total')
+  const cartContents = document.querySelector('.cart-contents')
+  const addToCart = document.querySelector('#add-to-cart')
   const addXClickHandler = (button, section) => {
     button.addEventListener('click', function(event) {
 
@@ -27,6 +34,18 @@ document.addEventListener('DOMContentLoaded', function() {
           input.name = `genre${index}`
         })
       }
+    })
+  }
+
+  if (openCart) {
+    openCart.addEventListener('click', function() {
+      modalOverlay.style.display = 'flex'
+      modal.style.display = 'flex'
+    })
+
+    closeCart.addEventListener('click', function() {
+      modalOverlay.style.display = 'none'
+      modal.style.display = 'none'
     })
   }
 
