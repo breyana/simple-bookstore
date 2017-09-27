@@ -95,9 +95,11 @@ document.addEventListener('DOMContentLoaded', function() {
       bookPriceSpan.innerText = bookPrice.innerText
       removeFromCart.innerText = 'X'
 
+      addBlurCartCalculation(removeFromCart)
       removeFromCart.addEventListener('click', function(event) {
+        const itemCount = event.target.previousElementSibling.previousElementSibling.value
         event.target.parentElement.remove()
-        openCart.innerText = `Cart (${numInCart() - 1})`
+        openCart.innerText = `Cart (${numInCart() - itemCount})`
       })
 
       addBlurCartCalculation(bookCount)
