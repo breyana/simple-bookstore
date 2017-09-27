@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const addAuthorButton = document.querySelector('.add-author-input')
   const removeGenreInputs = document.querySelectorAll('.remove-genre-input')
   const removeAuthorInputs = document.querySelectorAll('.remove-author-input')
+  const bookTitle = document.querySelector('#single-book-title')
+  const bookPrice = document.querySelector('#single-book-price')
+  const bookISBN = document.querySelector('#single-book-isbn')
   const openCart = document.querySelector('.open-cart')
   const modalOverlay = document.querySelector('.modal-overlay')
   const modal = document.querySelector('.modal')
@@ -11,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const total = document.querySelector('.total')
   const cartContents = document.querySelector('.cart-contents')
   const addToCart = document.querySelector('#add-to-cart')
+  const numInCart = () => parseInt(openCart.innerText.match(/\d+/))
   const addXClickHandler = (button, section) => {
     button.addEventListener('click', function(event) {
 
@@ -36,6 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     })
   }
+  const addBlurCartCalculation = (input) => {
+    input.addEventListener('blur', function() {
+      const bookCountTotals = document.querySelectorAll('.cart-book-count')
+      let cartTotal = 0
+      bookCountTotals.forEach(bookCount => {
+        cartTotal += parseInt(bookCount.value)
+      })
+      openCart.innerText = `Cart (${cartTotal})`
+    })
+  }
 
   if (openCart) {
     openCart.addEventListener('click', function() {
@@ -46,6 +60,54 @@ document.addEventListener('DOMContentLoaded', function() {
     closeCart.addEventListener('click', function() {
       modalOverlay.style.display = 'none'
       modal.style.display = 'none'
+    })
+  }
+
+  if (addToCart) {
+    addToCart.addEventListener('click', function(event) {
+      openCart.innerText = `Cart (${numInCart() + 1})`
+      const isbnID = bookISBN.innerText.replace(/ISBN: /g, 'isbn')
+      console.log(isbnID)
+      const currentBookCount = document.querySelector(`#${isbnID}`)
+
+      if (currentBookCount) {
+        const currentValue = parseInt(currentBookCount.value)
+        currentBookCount.value = currentValue + 1
+        return
+      }
+
+      const item = document.createElement('li')
+      const bookTitleSpan = document.createElement('span')
+      const bookCount = document.createElement('input')
+      const bookPriceSpan = document.createElement('span')
+      const removeFromCart = document.createElement('button')
+
+      item.className = 'item'
+      bookTitleSpan.className = 'cart-book-title'
+      bookCount.className = 'cart-book-count'
+      bookPriceSpan.className = 'cart-book-price'
+      removeFromCart.className = 'remove-from-cart'
+
+      bookCount.id = isbnID
+      bookCount.value = 1
+
+      bookTitleSpan.innerText = bookTitle.innerText.replace(/Title: /, '')
+      bookPriceSpan.innerText = bookPrice.innerText
+      removeFromCart.innerText = 'X'
+
+      removeFromCart.addEventListener('click', function(event) {
+        event.target.parentElement.remove()
+        openCart.innerText = `Cart (${numInCart() - 1})`
+      })
+
+      addBlurCartCalculation(bookCount)
+
+      item.append(bookTitleSpan)
+      item.append(bookCount)
+      item.append(bookPriceSpan)
+      item.append(removeFromCart)
+
+      cartContents.append(item)
     })
   }
 
