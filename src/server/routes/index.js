@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const books = require('../../models/db/books')
 const booksRoutes = require('./books')
+const usersRoutes = require('./users')
 
 router.get('/', (request, response) => {
   books.getAllBookIdImages()
@@ -9,5 +10,6 @@ router.get('/', (request, response) => {
 })
 
 router.use('/books', booksRoutes)
+router.use(usersRoutes)
 
 module.exports = router
