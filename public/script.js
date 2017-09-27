@@ -48,6 +48,15 @@ document.addEventListener('DOMContentLoaded', function() {
         cartTotal += parseInt(bookCount.value)
       })
       openCart.innerText = `Cart (${cartTotal})`
+      const cartBookPrices = document.querySelectorAll('.cart-book-price')
+      let totalPrice = 0
+      cartBookPrices.forEach(bookPrice => {
+        const currentBookPrice = parseFloat(bookPrice.innerText.replace(/\$/, ''))
+        let toAdd = parseFloat((bookPrice.previousElementSibling.value * currentBookPrice)).toFixed(2)
+        totalPrice += parseFloat(toAdd)
+        console.log(totalPrice)
+      })
+      total.innerText = `Total: $${totalPrice.toFixed(2)}`
     })
   }
 
@@ -69,10 +78,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const isbnID = bookISBN.innerText.replace(/ISBN: /g, 'isbn')
       console.log(isbnID)
       const currentBookCount = document.querySelector(`#${isbnID}`)
+      let totalCost = parseFloat(bookPrice.innerText.replace(/\$/, ''))
 
       if (currentBookCount) {
         const currentValue = parseInt(currentBookCount.value)
         currentBookCount.value = currentValue + 1
+        totalCost = parseFloat(totalCost * currentBookCount.value).toFixed(2)
+        total.innerText = `Total: $${totalCost}`
         return
       }
 
@@ -95,14 +107,17 @@ document.addEventListener('DOMContentLoaded', function() {
       bookPriceSpan.innerText = bookPrice.innerText
       removeFromCart.innerText = 'X'
 
+      addBlurCartCalculation(bookCount)
       addBlurCartCalculation(removeFromCart)
       removeFromCart.addEventListener('click', function(event) {
         const itemCount = event.target.previousElementSibling.previousElementSibling.value
+        const itemPrice = parseFloat(event.target.previousElementSibling.innerText.replace(/\$/, ''))
+        const totalCostBeingRemoved = (itemPrice * itemCount).toFixed(2)
+        const totalInCart = parseFloat(total.innerText.replace(/Total: \$/, ''))
         event.target.parentElement.remove()
         openCart.innerText = `Cart (${numInCart() - itemCount})`
+        total.innerText = `Total: $${totalInCart - totalCostBeingRemoved}`
       })
-
-      addBlurCartCalculation(bookCount)
 
       item.append(bookTitleSpan)
       item.append(bookCount)
@@ -110,6 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
       item.append(removeFromCart)
 
       cartContents.append(item)
+
+      total.innerText = `Total: $${totalCost}`
     })
   }
 
