@@ -1,0 +1,14 @@
+<nav>
+  <a href "/">Home</a>
+  <form method="get" action="/books/search" id="search-bar">
+    <input name="search" type="search" placeholder="Search for Author, Title, or Genre" autofocus/>
+    <input type="submit" value="Search"/>
+  </form>
+  <button type="button" class="open-cart">Cart (0)</button>
+  <% if (session) {%>
+    <a href="/logout">Log Out</a>
+  <% } else { %>
+    <a href="/signup">Sign Up</a>
+    <a href="/login">Log In</a>
+  <% } %>
+</nav>

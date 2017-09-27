@@ -1,0 +1,40 @@
+<%- include ../partials/header.ejs %>
+<%- include ../partials/modal.ejs %>
+
+  <% if (book) { %>
+    <img id="single-book-img" src=<%=book.img_url%>>
+    <div id="single-book-info">
+      <div id="single-book-title"><%=book.title%></div>
+      <div id="single-book-author">
+        By
+        <% book.authors.forEach(function(author, index) { %>
+          <% if(index > 0) { %>
+            <span>& <%=author.first_name%> <%=author.last_name%></span>
+          <% } else { %>
+            <span><%=author.first_name%> <%=author.last_name%></span>
+          <% } %>
+        <% }) %>
+      </div>
+      <div id="single-book-genres">
+        Genre(s):
+        <% book.genres.forEach(function(genre, index) { %>
+          <% if(index > 0) { %>
+            <span>& <%=genre%></span>
+          <% } else { %>
+            <span><%=genre%></span>
+          <% } %>
+        <% }) %>
+      </div>
+    </div>
+    <div id="single-book-purchase-info">
+      <div id="single-book-price">$<%=book.price%></div>
+      <div id="single-book-in-stock"><%=book.in_stock%></div>
+      <button id="add-to-cart">Add to Cart</button>
+    </div>
+    <div id="single-book-isbn-publisher">
+      <div id="single-book-isbn">ISBN: <%=book.isbn%></div>
+      <div id="single-book-publisher"><%=book.publisher%></div>
+    </div>
+  <% } %>
+
+<%- include ../partials/footer.ejs %>
