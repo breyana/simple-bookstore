@@ -45,6 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const bookCountTotals = document.querySelectorAll('.cart-book-count')
       let cartTotal = 0
       bookCountTotals.forEach(bookCount => {
+        if(parseFloat(bookCount.value) < 0) {
+          bookCount.value = 0
+        }
         cartTotal += parseInt(bookCount.value)
       })
       openCart.innerText = `Cart (${cartTotal})`
