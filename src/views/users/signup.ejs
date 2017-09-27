@@ -1,0 +1,24 @@
+<%- include ../partials/header.ejs %>
+
+<% if (errorMessage) { %>
+  <div class="error">
+    <%=errorMessage%>
+  </div>
+<% } %>
+<form action="/signup" method="POST">
+  <div>
+    Username: <input name="username" required>
+  </div>
+  <div>
+    Email: <input name="email" type="email" required>
+  </div>
+  <div>
+    Password: <input name="password" type="password" required>
+  </div>
+  <div>
+    Password Confirmation: <input name="passwordConfirm" type="password" required>
+  </div>
+  <input type="submit" value="Sign Up">
+</form>
+
+<%- include ../partials/footer.ejs %>
