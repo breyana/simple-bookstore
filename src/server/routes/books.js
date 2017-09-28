@@ -70,7 +70,7 @@ router.delete('/:id', (request, response) => {
     const id = request.params.id
     books.deleteBook(id)
       .then(result => {
-        response.redirect('/')
+        response.send(`Book with ID:${id} has been deleted`)
       })
   } else {
     response.status(401).send('Unauthorized User')
