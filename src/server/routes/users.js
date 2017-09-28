@@ -63,4 +63,9 @@ router.get('/login', (request, response) => {
   response.render('users/login')
 })
 
+router.get('/logout', (request, response) => {
+  request.session.destroy(err => console.error(err))
+  response.redirect('/')
+})
+
 module.exports = router
