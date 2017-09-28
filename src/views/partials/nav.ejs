@@ -6,6 +6,9 @@
   </form>
   <button type="button" class="open-cart">Cart (0)</button>
   <%- include ../partials/modal.ejs %>
+  <% if (role === 'admin') {%>
+    <a href="/admin">Admin</a>
+  <% } %>
   <% if (session) {%>
     <a href="/logout">Log Out</a>
   <% } else { %>
