@@ -15,4 +15,17 @@ const setDefaultResponseLocals = (request, response, next) => {
   next()
 }
 
-module.exports = setDefaultResponseLocals
+const errorHandler = (error, request, response, next) => {
+  console.error(error)
+  response.status(500).render('common/error')
+}
+
+const notFoundHandler = (request, response) => {
+  response.status(404).render('common/404')
+}
+
+module.exports = {
+  setDefaultResponseLocals,
+  errorHandler,
+  notFoundHandler
+}

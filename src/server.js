@@ -21,7 +21,7 @@ app.use(session({
   saveUninitialized: false
 }))
 
-app.use(middleware)
+app.use(middleware.setDefaultResponseLocals)
 
 app.use(routes)
 

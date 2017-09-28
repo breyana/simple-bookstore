@@ -5,7 +5,7 @@ router.get('/admin', (request, response) => {
   if (request.session.role === 'admin') {
     response.render('users/admin')
   } else {
-    response.redirect('/')
+    response.status(401).render('common/401')
   }
 })
 
@@ -24,12 +24,9 @@ router.put('/admin/permissions', (request, response) => {
           response.render('users/admin', { errorMessage: 'User is not found'})
         }
       })
-      .catch(error => {
-        console.log(error)
-        response.redirect('/')
-      })
+      .catch(error => next(error))
   } else {
-    response.redirect('/')
+    response.status(401).render('common/401')
   }
 })
 
@@ -56,7 +53,7 @@ router.post('/signup', (request, response) => {
       } else if (error.constraint === 'users_email_key') {
         response.render('users/signup', {errorMessage: 'Email already exists'})
       } else {
-        response.render('users/signup', {errorMessage: 'There was an error'})
+        next(error)
       }
     })
 })
@@ -89,6 +86,7 @@ router.post('/login', (request, response) => {
         response.render('users/login', {errorMessage})
       }
     })
+    .catch(error => next(error))
 })
 
 router.get('/login', (request, response) => {

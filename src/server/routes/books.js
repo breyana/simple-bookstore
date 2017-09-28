@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const books = require('../../models/db/books')
 
-router.get('/search', (request, response) => {
+router.get('/search', (request, response, next) => {
   const searchTerm = request.query.search
     .toLowerCase()
     .replace(/^ */, '%')
@@ -15,13 +15,14 @@ router.get('/search', (request, response) => {
     .then(books => {
       response.render('books/search', { books, searchTerm: request.query.search, offset })
     })
+    .catch(error => next(error))
 })
 
 router.get('/create', (request, response) => {
   if (request.session.role === 'admin') {
     response.render('books/create')
   } else {
-    response.redirect('/')
+    response.status(401).render('common/401')
   }
 })
 
@@ -59,9 +60,9 @@ router.post('/create', (request, response) => {
           .then(() => response.redirect(`/books/${book[0].id}`))
           .catch(error => console.error(error))
       })
-      .catch(error => console.error(error))
+      .catch(error => next(error))
   } else {
-    response.status(401).send('Unauthorized User')
+    response.status(401).render('common/401')
   }
 })
 
@@ -69,11 +70,10 @@ router.delete('/:id', (request, response) => {
   if (request.session.role === 'admin') {
     const id = request.params.id
     books.deleteBook(id)
-      .then(result => {
-        response.send(`Book with ID:${id} has been deleted`)
-      })
+      .then(result => response.send(`Book with ID:${id} has been deleted`))
+      .catch(error => response.send(`Error deleting Book ID:${id}`))
   } else {
-    response.status(401).send('Unauthorized User')
+    response.status(401).render('common/401')
   }
 })
 
@@ -107,9 +107,9 @@ router.put('/:id/edit', (request, response) => {
       .then(() => books.addOrEditAuthors(compiledBook.id, authors))
       .then(() => books.addOrEditGenres(compiledBook.id, genres))
       .then(() => response.redirect(`/books/${compiledBook.id}`))
-      .catch(error => console.error(error))
+      .catch(error => next(error))
   } else {
-    response.status(401).send('Unauthorized User')
+    response.status(401).render('common/401')
   }
 })
 
@@ -118,22 +118,24 @@ router.get('/:id/edit', (request, response) => {
     const id = request.params.id
     books.getOneBook(id)
     .then(book => {
-      books.getAllGenres()
-      .then(allGenres => {
-        response.render('books/edit', { book, allGenres })
-      })
+      return books.getAllGenres()
+        .then(allGenres => {
+          response.render('books/edit', { book, allGenres })
+        })
     })
+    .catch(error => next())
   } else {
-    response.redirect('/')
+    response.status(401).render('common/401')
   }
 })
 
 router.get('/:id', (request, response) => {
   const id = request.params.id
   books.getOneBook(id)
-  .then(book => {
-    response.render('books/book', { book })
-  })
+    .then(book => {
+      response.render('books/book', { book })
+    })
+    .catch(error => next(error))
 })
 
 module.exports = router
