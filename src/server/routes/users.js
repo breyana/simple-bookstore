@@ -12,7 +12,11 @@ router.post('/signup', (request, response) => {
     password: request.body.password
   }
   users.create(user)
-    .then(() => response.redirect('/'))
+    .then(id => {
+      request.session.userId = id
+      request.session.role = 'reader'
+      response.redirect('/')
+    })
     .catch(error => {
       console.log(error)
       if (error.constraint === 'users_username_key') {
@@ -42,7 +46,8 @@ router.post('/login', (request, response) => {
         users.isValidPassword(user.password, returnedUser.password)
           .then(isValid => {
             if(isValid) {
-              //save returnedUser.id and .role in session
+              request.session.userId = returnedUser.id
+              request.session.role = returnedUser.role
               response.redirect('/')
             } else {
               response.render('users/login', {errorMessage})
