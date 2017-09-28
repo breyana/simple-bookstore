@@ -10,6 +10,7 @@ const setDefaultResponseLocals = (request, response, next) => {
   }
     response.locals.book = undefined
     response.locals.errorMessage = undefined
+    response.locals.message = undefined
 
   next()
 }

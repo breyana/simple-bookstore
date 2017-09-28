@@ -1,6 +1,38 @@
 const router = require('express').Router()
 const users = require('../../models/db/users')
 
+router.get('/admin', (request, response) => {
+  if (request.session.role === 'admin') {
+    response.render('users/admin')
+  } else {
+    response.redirect('/')
+  }
+})
+
+router.put('/admin/permissions', (request, response) => {
+  if (request.session.role === 'admin') {
+    const user = {
+      login: request.body.login,
+      role: request.body.role
+    }
+
+    users.changeRole(user)
+      .then(userId => {
+        if(userId.length > 0) {
+          response.render('users/admin', { message: `${user.login} is now set to ${user.role}`})
+        } else {
+          response.render('users/admin', { errorMessage: 'User is not found'})
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        response.redirect('/')
+      })
+  } else {
+    response.redirect('/')
+  }
+})
+
 router.post('/signup', (request, response) => {
   if (request.body.password !== request.body.passwordConfirm) {
     response.render('users/signup', {errorMessage: 'Password confirmation does not match password'})
@@ -64,7 +96,7 @@ router.get('/login', (request, response) => {
 })
 
 router.get('/logout', (request, response) => {
-  request.session.destroy(err => console.error(err))
+  request.session.destroy()
   response.redirect('/')
 })
 
