@@ -38,7 +38,9 @@
         <button type="button" class="add-genre-input">Add Genre</button>
         <div>
           <input class="edit" type="submit" value="Edit">
-          <button id="delete-book" data-id="<%=book.id%>">Delete</button>
+          <% if (role === 'admin') { %>
+            <button id="delete-book" data-id="<%=book.id%>">Delete</button>
+          <% } %>
         </div>
       </form>
       <datalist id="genres">
