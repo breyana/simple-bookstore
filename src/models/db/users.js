@@ -6,8 +6,9 @@ const create = (user) => {
     .then(hash => {
       return db.query(`
         INSERT INTO users(username, email, password)
-        VALUES($1, $2, $3)`,
+        VALUES($1, $2, $3) RETURNING id`,
         [user.username, user.email, hash])
+        .then(users => users[0].id)
     })
     .catch(error => {
       throw error
