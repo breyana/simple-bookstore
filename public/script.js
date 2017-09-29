@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const total = document.querySelector('.total')
   const cartContents = document.querySelector('.cart-contents')
   const addToCart = document.querySelector('#add-to-cart')
+  const quantityFields = document.querySelectorAll('.cart-book-count')
   const numInCart = () => parseInt(openCart.innerText.match(/\d+/))
   const addXClickHandler = (button, section) => {
     button.addEventListener('click', function(event) {
@@ -57,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentBookPrice = parseFloat(bookPrice.innerText.replace(/\$/, ''))
         let toAdd = parseFloat((bookPrice.previousElementSibling.value * currentBookPrice)).toFixed(2)
         totalPrice += parseFloat(toAdd)
-        console.log(totalPrice)
       })
       total.innerText = `Total: $${totalPrice.toFixed(2)}`
     })
@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
     addToCart.addEventListener('click', function(event) {
       openCart.innerText = `Cart (${numInCart() + 1})`
       const isbnID = bookISBN.innerText.replace(/ISBN: /g, 'isbn')
-      console.log(isbnID)
       const currentBookCount = document.querySelector(`#${isbnID}`)
       let totalCost = parseFloat(bookPrice.innerText.replace(/\$/, ''))
 
@@ -148,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
   if (deleteButton) {
     deleteButton.addEventListener('click', function(event) {
       const bookId = deleteButton.getAttribute('data-id')
-      console.log('deleting book #', bookId)
       fetch(`/books/${bookId}`, {
           method: 'DELETE',
           credentials: 'same-origin'
