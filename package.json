@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:init": "psql < seeds/schema.sql && psql < seeds/load_data.sql",
+    "db:init": "psql < seeds/schema.sql && psql < seeds/load_data.sql && psql simple_bookstore < node_modules/connect-pg-simple/table.sql",
     "start": "nodemon"
   },
   "repository": {
