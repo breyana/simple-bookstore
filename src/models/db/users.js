@@ -28,10 +28,46 @@ const getByLogin = (user) => {
   [user.login])
 }
 
+const getCart = (userId) => {
+  return db.query(`
+    SELECT title, price, quantity FROM carts
+    JOIN books ON books.id = carts.book_id
+    WHERE user_id = $1
+    `, [userId])
+}
+
+const addToOrUpdateCart = (userId, item) => {
+  return db.oneOrNone(`
+    SELECT * FROM carts
+    WHERE user_id = $1 AND book_id = $2`,
+    [userId, item.id])
+      .then(existingItem => {
+        if (!existingItem) {
+          return db.query(`
+            INSERT INTO carts(user_id, book_id, quantity)
+            VALUES($1, $2, $3)`,
+            [userId, item.id, item.quantity])
+        } else {
+          return db.query(`
+            UPDATE carts SET quantity = $3
+            WHERE user_id = $1 AND book_id = $2`,
+            [userId, item.id, item.quantity])
+        }
+      })
+}
+
+const removeFromCart = (userId, itemId) => {
+  return db.query(`
+    DELETE FROM carts
+    WHERE user_id = $1 AND book_id = $2`, [userId, itemId])
+}
 
 module.exports = {
   create,
   changeRole,
   isValidPassword,
-  getByLogin
+  getByLogin,
+  getCart,
+  addToOrUpdateCart,
+  removeFromCart
 }
