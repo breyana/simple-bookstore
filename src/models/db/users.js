@@ -30,7 +30,7 @@ const getByLogin = (user) => {
 
 const getCart = (userId) => {
   return db.query(`
-    SELECT title, price, quantity FROM carts
+    SELECT books.id, title, price, quantity FROM carts
     JOIN books ON books.id = carts.book_id
     WHERE user_id = $1
     `, [userId])
