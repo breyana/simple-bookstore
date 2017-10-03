@@ -4,6 +4,22 @@
   <div class="modal-inner">
     <h1>Shopping Cart</h1>
     <ul class="cart-contents">
+      <% if (cart) { %>
+        <% cart.forEach(function(item) {%>
+          <li class="item">
+            <span class="book-title-span">
+              <%=item.title%>
+            </span>
+            <input class="book-count" type="number" id='book<%=item.id%>' value=<%=item.quantity%>>
+            </input>
+            <span class="book-price-span">
+              $<%=item.price%>
+            </span>
+            <button class="remove-from-cart">
+              X
+            </button>
+        <% }) %>
+      <% } %>
     </ul>
   </div>
   <span class="total">Total: $0.00</span>
