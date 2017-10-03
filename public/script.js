@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (addToCart) {
     addToCart.addEventListener('click', function(event) {
       openCart.innerText = `Cart (${numInCart() + 1})`
-      const isbnID = bookISBN.innerText.replace(/ISBN: /g, 'isbn')
-      const currentBookCount = document.querySelector(`#${isbnID}`)
+      const bookID = window.location.pathname.replace(/\/books\//, 'book')
+      const currentBookCount = document.querySelector(`#${bookID}`)
       let totalCost = parseFloat(bookPrice.innerText.replace(/\$/, ''))
 
       if (currentBookCount) {
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
       bookPriceSpan.className = 'cart-book-price'
       removeFromCart.className = 'remove-from-cart'
 
-      bookCount.id = isbnID
+      bookCount.id = bookID
       bookCount.value = 1
 
       bookTitleSpan.innerText = bookTitle.innerText.replace(/Title: /, '')
@@ -192,5 +192,4 @@ document.addEventListener('DOMContentLoaded', function() {
       addXClickHandler(removeButton, 'author')
     })
   }
-
 })
