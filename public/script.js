@@ -14,7 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const total = document.querySelector('.total')
   const cartContents = document.querySelector('.cart-contents')
   const addToCart = document.querySelector('#add-to-cart')
-  const quantityFields = document.querySelectorAll('.cart-book-count')
+  const cartItems = document.querySelectorAll('.item')
+  const quantityFields = () => document.querySelectorAll('.cart-book-count')
+  const cartBookPrices = () => document.querySelectorAll('.cart-book-price')
+  const removeFromCartButtons = document.querySelectorAll('.remove-from-cart')
   const numInCart = () => parseInt(openCart.innerText.match(/\d+/))
   const addXClickHandler = (button, section) => {
     button.addEventListener('click', function(event) {
@@ -43,18 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   const addBlurCartCalculation = (input) => {
     input.addEventListener('blur', function() {
-      const bookCountTotals = document.querySelectorAll('.cart-book-count')
       let cartTotal = 0
-      bookCountTotals.forEach(bookCount => {
+      quantityFields().forEach(bookCount => {
         if(parseFloat(bookCount.value) < 0) {
           bookCount.value = 0
         }
         cartTotal += parseInt(bookCount.value)
       })
       openCart.innerText = `Cart (${cartTotal})`
-      const cartBookPrices = document.querySelectorAll('.cart-book-price')
       let totalPrice = 0
-      cartBookPrices.forEach(bookPrice => {
+      cartBookPrices().forEach(bookPrice => {
         const currentBookPrice = parseFloat(bookPrice.innerText.replace(/\$/, ''))
         let toAdd = parseFloat((bookPrice.previousElementSibling.value * currentBookPrice)).toFixed(2)
         totalPrice += parseFloat(toAdd)
@@ -62,6 +63,40 @@ document.addEventListener('DOMContentLoaded', function() {
       total.innerText = `Total: $${totalPrice.toFixed(2)}`
     })
   }
+  const removeFromCartHandler = (button) => {
+    button.addEventListener('click', function(event) {
+      const itemCount = event.target.previousElementSibling.previousElementSibling.value
+      const itemPrice = parseFloat(event.target.previousElementSibling.innerText.replace(/\$/, ''))
+      const totalCostBeingRemoved = (itemPrice * itemCount).toFixed(2)
+      const totalInCart = parseFloat(total.innerText.replace(/Total: \$/, ''))
+      event.target.parentElement.remove()
+      openCart.innerText = `Cart (${numInCart() - itemCount})`
+      total.innerText = `Total: $${(totalInCart - parseFloat(totalCostBeingRemoved)).toFixed(2)}`
+    })
+  }
+
+  if (cartItems) {
+    let totalItems = 0
+    let totalPrice = 0
+    
+    quantityFields().forEach(field => {
+      addBlurCartCalculation(field)
+      totalItems += parseInt(field.value)
+    })
+    cartBookPrices().forEach(price => {
+      const currentPrice = parseFloat(price.innerText.replace(/\$/, ''))
+      const currentQuantity = parseInt(price.previousElementSibling.value)
+      totalPrice += (currentPrice * currentQuantity)
+    })
+
+    openCart.innerText = `Cart (${totalItems})`
+    total.innerText = `Total: $${totalPrice.toFixed(2)}`
+
+    removeFromCartButtons.forEach(button => {
+      removeFromCartHandler(button)
+    })
+  }
+
 
   if (openCart) {
     openCart.addEventListener('click', function() {
@@ -111,15 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       addBlurCartCalculation(bookCount)
       addBlurCartCalculation(removeFromCart)
-      removeFromCart.addEventListener('click', function(event) {
-        const itemCount = event.target.previousElementSibling.previousElementSibling.value
-        const itemPrice = parseFloat(event.target.previousElementSibling.innerText.replace(/\$/, ''))
-        const totalCostBeingRemoved = (itemPrice * itemCount).toFixed(2)
-        const totalInCart = parseFloat(total.innerText.replace(/Total: \$/, ''))
-        event.target.parentElement.remove()
-        openCart.innerText = `Cart (${numInCart() - itemCount})`
-        total.innerText = `Total: $${totalInCart - totalCostBeingRemoved}`
-      })
+      removeFromCartHandler(removeFromCart)
 
       item.append(bookTitleSpan)
       item.append(bookCount)
