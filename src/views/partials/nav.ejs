@@ -4,7 +4,11 @@
     <input name="search" type="search" placeholder="Search for Author, Title, or Genre" autofocus/>
     <input type="submit" value="Search"/>
   </form>
-  <button type="button" class="open-cart">Cart (0)</button>
+  <% if(cart) { %>
+    <button type="button" class="open-cart">Cart (<%=cart.length%>)</button>
+  <% } else { %>
+    <button type="button" class="open-cart">Cart (0)</button>
+  <% } %>
   <%- include ../partials/modal.ejs %>
   <% if (role === 'admin') {%>
     <a href="/admin">Admin</a>
