@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const modalOverlay = document.querySelector('.modal-overlay')
   const modal = document.querySelector('.modal')
   const closeCart = document.querySelector('.close-cart')
-  const total = document.querySelector('.total')
+  const total = () => document.querySelector('.total')
   const cartContents = document.querySelector('.cart-contents')
   const addToCart = document.querySelector('#add-to-cart')
   const cartItems = document.querySelectorAll('.item')
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let toAdd = parseFloat((bookPrice.previousElementSibling.value * currentBookPrice)).toFixed(2)
         totalPrice += parseFloat(toAdd)
       })
-      total.innerText = `Total: $${totalPrice.toFixed(2)}`
+      total().innerText = `Total: $${totalPrice.toFixed(2)}`
       const bookId = event.target.id.replace(/book/, '')
       const bookQuantity = event.target.value
       updateFetch(bookId, bookQuantity)
@@ -81,9 +81,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const itemCount = event.target.previousElementSibling.previousElementSibling.value
       const itemPrice = parseFloat(event.target.previousElementSibling.innerText.replace(/\$/, ''))
       const totalCostBeingRemoved = (itemPrice * itemCount).toFixed(2)
-      const totalInCart = parseFloat(total.innerText.replace(/Total: \$/, ''))
+      const totalInCart = parseFloat(total().innerText.replace(/Total: \$/, ''))
       openCart.innerText = `Cart (${numInCart() - itemCount})`
-      total.innerText = `Total: $${(totalInCart - parseFloat(totalCostBeingRemoved)).toFixed(2)}`
+      total().innerText = `Total: $${(totalInCart - parseFloat(totalCostBeingRemoved)).toFixed(2)}`
       const currentBookId = event.target.previousElementSibling.previousElementSibling.id.replace(/book/, '')
 
       fetch('/cart', {
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     openCart.innerText = `Cart (${totalItems})`
-    total.innerText = `Total: $${totalPrice.toFixed(2)}`
+    total().innerText = `Total: $${totalPrice.toFixed(2)}`
 
     removeFromCartButtons.forEach(button => {
       removeFromCartHandler(button)
@@ -147,13 +147,14 @@ document.addEventListener('DOMContentLoaded', function() {
       const bookID = window.location.pathname.replace(/\/books\//, 'book')
       const currentBookCount = document.querySelector(`#${bookID}`)
       let totalCost = parseFloat(bookPrice.innerText.replace(/\$/, ''))
+      let existingTotal = parseFloat(total().innerText.replace(/Total: \$/, ''))
 
       if (currentBookCount) {
         const currentValue = parseInt(currentBookCount.value)
         currentBookCount.value = currentValue + 1
         totalCost = parseFloat(totalCost * currentBookCount.value).toFixed(2)
-        total.innerText = `Total: $${totalCost}`
-        updateFetch(bookID, currentBookCount.value)
+        total().innerText = `Total: $${parseFloat(totalCost + existingTotal).toFixed(2)}`
+        updateFetch(bookID.replace(/book/, ''), currentBookCount.value)
         return
       }
 
@@ -186,9 +187,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       cartContents.append(item)
 
-      total.innerText = `Total: $${totalCost}`
+      total().innerText = `Total: $${parseFloat(totalCost + existingTotal).toFixed(2)}`
 
-      updateFetch(bookID, bookCount.value)
+      updateFetch(bookID.replace(/book/, ''), bookCount.value)
     })
   }
 
