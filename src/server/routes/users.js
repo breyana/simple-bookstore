@@ -98,4 +98,20 @@ router.get('/logout', (request, response) => {
   response.redirect('/')
 })
 
+router.put('/cart', (request, response) => {
+  const userId = request.session.userId
+  const item = request.body
+  users.addToOrUpdateCart(userId, item)
+    .then(result => response.send(`Cart has been updated`))
+    .catch(error => response.send(`Error occurred updating cart`))
+})
+
+router.delete('/cart', (request, response) => {
+  const userId = request.session.userId
+  const bookId = request.body.bookId
+  users.removeFromCart(userId, bookId)
+    .then(result => response.json({message: `Cart item ${bookId} has been deleted`}))
+    .catch(error => response.json({error: `Error deleting cart item ${bookId}`}))
+})
+
 module.exports = router

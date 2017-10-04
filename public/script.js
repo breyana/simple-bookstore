@@ -19,6 +19,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const cartBookPrices = () => document.querySelectorAll('.cart-book-price')
   const removeFromCartButtons = document.querySelectorAll('.remove-from-cart')
   const numInCart = () => parseInt(openCart.innerText.match(/\d+/))
+  const updateFetch = (id, quantity) => {
+    fetch('/cart', {
+      method: 'put',
+      body: JSON.stringify({ id, quantity }),
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }
   const addXClickHandler = (button, section) => {
     button.addEventListener('click', function(event) {
 
@@ -45,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   }
   const addBlurCartCalculation = (input) => {
-    input.addEventListener('blur', function() {
+    input.addEventListener('blur', function(event) {
       let cartTotal = 0
       quantityFields().forEach(bookCount => {
         if(parseFloat(bookCount.value) < 0) {
@@ -61,6 +71,9 @@ document.addEventListener('DOMContentLoaded', function() {
         totalPrice += parseFloat(toAdd)
       })
       total.innerText = `Total: $${totalPrice.toFixed(2)}`
+      const bookId = event.target.id.replace(/book/, '')
+      const bookQuantity = event.target.value
+      updateFetch(bookId, bookQuantity)
     })
   }
   const removeFromCartHandler = (button) => {
@@ -69,16 +82,34 @@ document.addEventListener('DOMContentLoaded', function() {
       const itemPrice = parseFloat(event.target.previousElementSibling.innerText.replace(/\$/, ''))
       const totalCostBeingRemoved = (itemPrice * itemCount).toFixed(2)
       const totalInCart = parseFloat(total.innerText.replace(/Total: \$/, ''))
-      event.target.parentElement.remove()
       openCart.innerText = `Cart (${numInCart() - itemCount})`
       total.innerText = `Total: $${(totalInCart - parseFloat(totalCostBeingRemoved)).toFixed(2)}`
+      const currentBookId = event.target.previousElementSibling.previousElementSibling.id.replace(/book/, '')
+
+      fetch('/cart', {
+        method: 'delete',
+        body: JSON.stringify({ bookId: currentBookId }),
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(json => {
+          if (json.error) {
+            alert(json.error)
+          } else {
+            event.target.parentElement.remove()
+          }
+        })
+        .catch(console.error)
     })
   }
 
   if (cartItems) {
     let totalItems = 0
     let totalPrice = 0
-    
+
     quantityFields().forEach(field => {
       addBlurCartCalculation(field)
       totalItems += parseInt(field.value)
@@ -122,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentBookCount.value = currentValue + 1
         totalCost = parseFloat(totalCost * currentBookCount.value).toFixed(2)
         total.innerText = `Total: $${totalCost}`
+        updateFetch(bookID, currentBookCount.value)
         return
       }
 
@@ -145,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
       removeFromCart.innerText = 'X'
 
       addBlurCartCalculation(bookCount)
-      addBlurCartCalculation(removeFromCart)
       removeFromCartHandler(removeFromCart)
 
       item.append(bookTitleSpan)
@@ -156,6 +187,8 @@ document.addEventListener('DOMContentLoaded', function() {
       cartContents.append(item)
 
       total.innerText = `Total: $${totalCost}`
+
+      updateFetch(bookID, bookCount.value)
     })
   }
 
