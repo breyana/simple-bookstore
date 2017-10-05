@@ -77,7 +77,7 @@ router.delete('/:id', (request, response) => {
   }
 })
 
-router.put('/:id/edit', (request, response) => {
+router.put('/:id/edit', (request, response, next) => {
   if (request.session.role === 'clerk' || request.session.role === 'admin') {
     const compiledBook = {}
     compiledBook.id = request.params.id
@@ -113,7 +113,7 @@ router.put('/:id/edit', (request, response) => {
   }
 })
 
-router.get('/:id/edit', (request, response) => {
+router.get('/:id/edit', (request, response, next) => {
   if (request.session.role === 'clerk' || request.session.role === 'admin') {
     const id = request.params.id
     books.getOneBook(id)
@@ -123,13 +123,13 @@ router.get('/:id/edit', (request, response) => {
           response.render('books/edit', { book, allGenres })
         })
     })
-    .catch(error => next())
+    .catch(error => next(error))
   } else {
     response.status(401).render('common/401')
   }
 })
 
-router.get('/:id', (request, response) => {
+router.get('/:id', (request, response, next) => {
   const id = request.params.id
   books.getOneBook(id)
     .then(book => {

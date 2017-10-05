@@ -9,7 +9,7 @@ router.get('/admin', (request, response) => {
   }
 })
 
-router.put('/admin/permissions', (request, response) => {
+router.put('/admin/permissions', (request, response, next) => {
   if (request.session.role === 'admin') {
     const user = {
       login: request.body.login,
@@ -30,7 +30,7 @@ router.put('/admin/permissions', (request, response) => {
   }
 })
 
-router.post('/signup', (request, response) => {
+router.post('/signup', (request, response, next) => {
   if (request.body.password !== request.body.passwordConfirm) {
     response.render('users/signup', {errorMessage: 'Password confirmation does not match password'})
     return
