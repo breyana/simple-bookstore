@@ -28,10 +28,16 @@ router.get('/create', (request, response) => {
 
 router.post('/create', (request, response) => {
   if (request.session.role === 'admin') {
+    let price;
+    if (request.body.price.includes('$')) {
+      price = request.body.price.replace(/\$/, '');
+    } else {
+      price = request.body.price;
+    }
     const compiledBook = {}
     compiledBook.title = request.body.title
     compiledBook.imgUrl = request.body.imgUrl
-    compiledBook.price = request.body.price
+    compiledBook.price = price
     compiledBook.inStock = request.body.inStock
     compiledBook.isbn = request.body.isbn
     compiledBook.publisher = request.body.publisher
