@@ -1,13 +1,18 @@
+<div class="company-name-header-container">
+  <h1 id="company-name-header">B & P Bookstore</h1>
+</div>
 <nav>
   <a href="/">Home</a>
   <form method="get" action="/books/search" id="search-bar">
-    <input name="search" type="search" placeholder="Search for Author, Title, or Genre" autofocus/>
-    <input type="submit" value="Search"/>
+    <input id="search-input" name="search" type="text" placeholder="Search for Author, Title, or Genre" autofocus/>
+    <input class="search-button" type="submit" value=""/>
+    <img class="search-button-image" src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Magnifying_glass_01.svg" alt="Magnifying Glass">
   </form>
   <button type="button" class="open-cart">Cart (0)</button>
   <%- include ../partials/modal.ejs %>
   <% if (role === 'admin') {%>
     <a href="/admin">Admin</a>
+    <a href="/books/create">Add a new book</a>
   <% } %>
   <% if (session) {%>
     <a href="/logout">Log Out</a>
