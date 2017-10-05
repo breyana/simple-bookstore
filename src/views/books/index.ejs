@@ -3,12 +3,11 @@
 <ul class="book-list" id="homepage-books">
   <% if(books){ %>
     <% books.forEach(function(book) { %>
-      <li><a href='/books/<%=book.id%>'><img src=<%=book.img_url%>></a></li>
+      <div class="book-list-item-container">
+        <li class="book-list-item"><a href='/books/<%=book.id%>'><img class="book-list-image" src=<%=book.img_url%>></a></li>
+      </div>
     <% }) %>
   <% } %>
-</ul>
-
-<ul class="book-list" id="search-books">
 </ul>
 
 <%- include ../partials/footer.ejs %>
