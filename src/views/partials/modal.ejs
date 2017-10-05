@@ -3,16 +3,16 @@
   <span class="close-cart">&times;</span>
   <div class="modal-inner">
     <h1>Shopping Cart</h1>
-    <div class="modal-header-container">
+    <ul class="cart-contents">
+      <li class="modal-header-container">
         <span class="modal-header" id="modal-header-title">Title</span>
         <span class="modal-header" id="modal-header-quantity">Quantity</span>
         <span class="modal-header" id="modal-header-price">Price</span>
-    </div>
-    <ul class="cart-contents">
+      </li>
       <% if (cart) { %>
         <% cart.forEach(function(item) {%>
           <li class="item">
-            <span class="book-title-span">
+            <span class="cart-book-title">
               <%=item.title%>
             </span>
             <input class="cart-book-count" type="number" id='book<%=item.id%>' value=<%=item.quantity%>>
@@ -26,6 +26,8 @@
         <% }) %>
       <% } %>
     </ul>
+    <div class="total-container">
+      <span class="total">Total: $0.00</span>
+    </div>
   </div>
-  <span class="total">Total: $0.00</span>
 </div>
