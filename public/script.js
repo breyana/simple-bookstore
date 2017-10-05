@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     button.addEventListener('click', function(event) {
 
       let allButtons = document.querySelectorAll(`.remove-${section}-input`)
-      if(allButtons.length <= 1) {
+      if(allButtons.length < 1) {
         return
       }
       event.target.parentElement.remove()
