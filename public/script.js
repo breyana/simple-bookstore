@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const bookTitleSpan = document.createElement('span')
       const bookCount = document.createElement('input')
       const bookPriceSpan = document.createElement('span')
-      const removeFromCart = document.createElement('button')
+      const removeFromCart = document.createElement('div')
 
       item.className = 'item'
       bookTitleSpan.className = 'cart-book-title'
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       bookTitleSpan.innerText = bookTitle.innerText.replace(/Title: /, '')
       bookPriceSpan.innerText = bookPrice.innerText
-      removeFromCart.innerText = 'X'
+      removeFromCart.innerHTML = '&#10006'
 
       addBlurCartCalculation(bookCount)
       removeFromCartHandler(removeFromCart)
