@@ -1,7 +1,7 @@
 <div class="company-name-header-container">
   <h1 id="company-name-header">B & P Bookstore</h1>
 </div>
-<nav>
+<nav class="nav-bar-container">
   <a href="/">Home</a>
   <form method="get" action="/books/search" id="search-bar">
     <input id="search-input" name="search" type="text" placeholder="Search for Author, Title, or Genre" autofocus/>
@@ -10,14 +10,16 @@
   </form>
   <button type="button" class="open-cart">Cart (0)</button>
   <%- include ../partials/modal.ejs %>
-  <% if (role === 'admin') {%>
-    <a href="/admin">Admin</a>
-    <a href="/books/create">Add a new book</a>
-  <% } %>
-  <% if (session) {%>
-    <a href="/logout">Log Out</a>
-  <% } else { %>
-    <a href="/signup">Sign Up</a>
-    <a href="/login">Log In</a>
-  <% } %>
+  <div>
+    <% if (role === 'admin') {%>
+      <a href="/admin">Admin</a>
+      <a href="/books/create">Add a new book</a>
+    <% } %>
+    <% if (session) {%>
+      <a href="/logout">Log Out</a>
+    <% } else { %>
+      <a href="/signup">Sign Up</a>
+      <a href="/login">Log In</a>
+    <% } %>
+  </div>
 </nav>
