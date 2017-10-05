@@ -3,6 +3,11 @@
   <span class="close-cart">&times;</span>
   <div class="modal-inner">
     <h1>Shopping Cart</h1>
+    <div class="modal-header-container">
+        <span class="modal-header" id="modal-header-title">Title</span>
+        <span class="modal-header" id="modal-header-quantity">Quantity</span>
+        <span class="modal-header" id="modal-header-price">Price</span>
+    </div>
     <ul class="cart-contents">
       <% if (cart) { %>
         <% cart.forEach(function(item) {%>
@@ -15,9 +20,9 @@
             <span class="cart-book-price">
               $<%=item.price%>
             </span>
-            <button class="remove-from-cart" id='book<%=item.id%>'>
-              X
-            </button>
+            <div class="remove-from-cart">
+              &#10006
+            </div>
         <% }) %>
       <% } %>
     </ul>
