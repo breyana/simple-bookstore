@@ -62,7 +62,7 @@ router.get('/signup', (request, response) => {
   response.render('users/signup')
 })
 
-router.post('/login', (request, response) => {
+router.post('/login', (request, response, next) => {
   const user = {
     login: request.body.login,
     password: request.body.password
