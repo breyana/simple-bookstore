@@ -171,8 +171,6 @@ ul {
 
 .book-list-item-container {
   border: 1px;
-  border-color: red;
-  border-style: solid;
   height: 20em;
   width: 15em;
 }
@@ -186,8 +184,6 @@ ul {
   height: 15em;
   width: auto;
   border: 1px;
-  border-color: blue;
-  border-style: solid;
 }
 
 /* NAV */
@@ -283,8 +279,6 @@ ul {
 /* SEARCH */
 
 .book-info-container {
-  border-color: green;
-  border-style: solid;
   height: 100px;
   max-width: 200px;
   min-width: 200px;
