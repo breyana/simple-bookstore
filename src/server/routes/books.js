@@ -29,7 +29,7 @@ router.get('/create', (request, response) => {
 router.post('/create', (request, response) => {
   if (request.session.role === 'admin') {
     let price
-    let imageUrl = request.body.image
+    let imageUrl = request.body.imgUrl
     if (!imageUrl.startsWith('http') && !(imageUrl.endsWith('.jpg') || imageUrl.endsWith('.png'))) {
       let message = {
           invalidImage: 'Please input a valid image',
@@ -51,7 +51,6 @@ router.post('/create', (request, response) => {
     compiledBook.publisher = request.body.publisher
     const authors = []
     const genres = []
-
 
     let i = 0
     while (request.body['firstName' + i]) {
