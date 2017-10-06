@@ -5,20 +5,23 @@
     <%=errorMessage%>
   </div>
 <% } %>
-<form action="/signup" method="POST">
-  <div>
-    Username: <input name="username" required>
-  </div>
-  <div>
-    Email: <input name="email" type="email" required>
-  </div>
-  <div>
-    Password: <input name="password" type="password" required>
-  </div>
-  <div>
-    Password Confirmation: <input name="passwordConfirm" type="password" required>
-  </div>
-  <input type="submit" value="Sign Up">
-</form>
+<div class="signup-container">
+  <h1>Sign Up</h1>
+  <form action="/signup" method="POST">
+    <div>
+      Username: <input name="username" required>
+    </div>
+    <div>
+      Email: <input name="email" type="email" required>
+    </div>
+    <div>
+      Password: <input name="password" type="password" required>
+    </div>
+    <div>
+      Password Confirmation: <input name="passwordConfirm" type="password" required>
+    </div>
+    <input class="submit-button" type="submit" value="Sign Up">
+  </form>
+</div>
 
 <%- include ../partials/footer.ejs %>

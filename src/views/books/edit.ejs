@@ -1,6 +1,7 @@
 <% include ../partials/header.ejs %>
 
   <% if (book) {%>
+    <div class="edit-book-container">
       <img id="edit-book-image" src=<%=book.img_url%>>
       <form id="edit-book-form" method="POST" action="/books/<%=book.id%>/edit?_method=PUT">
         <div>
@@ -37,7 +38,7 @@
         <% }) %>
         <button type="button" class="add-genre-input">Add Genre</button>
         <div>
-          <input class="edit" type="submit" value="Edit">
+          <input class="submit-button" type="submit" value="Edit">
           <% if (role === 'admin') { %>
             <button id="delete-book" data-id="<%=book.id%>">Delete</button>
           <% } %>
@@ -48,6 +49,7 @@
           <option value="<%=genre.name%>">
         <% }) %>
       </datalist>
+    </div>
   <% } %>
 
 <% include ../partials/footer.ejs %>

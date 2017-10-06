@@ -1,3 +1,8 @@
+.error {
+  font-weight: bold;
+  color: red;
+}
+
 /* BODY & HEADER */
 
 body {
@@ -304,7 +309,7 @@ ul {
   padding: 1em;
 }
 
-#single-book-img {
+#single-book-img, #edit-book-image {
   height: 400px;
   width: auto;
 }
@@ -341,4 +346,44 @@ ul {
 #single-book-edit-button:hover {
   background-color: #ff9900;
   border-color: #ff9900;
+}
+
+/* CREATE, ADMIN, EDIT PAGE */
+
+.create-book-container, .admin-page-container,
+.edit-book-container, .login-container, .signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%
+}
+
+.submit-button {
+  -webkit-appearance: none;
+  background-color: #ffad33;
+  border-color: #ffad33;
+  color: #ffffff;
+  height: 25px;
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+.submit-button:hover {
+  background-color: #ff9900;
+  border-color: #ff9900;
+}
+
+#delete-book {
+  -webkit-appearance: none;
+  background-color: #ff3333;
+  border-color: #ff0000;
+  color: white;
+  height: 25px;
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+#delete-book:hover {
+  background-color: #ee2222;
+  border-color: #ee2222;
 }

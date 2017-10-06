@@ -5,15 +5,17 @@
     <%=errorMessage%>
   </div>
 <% } %>
-
-<form action="/login" method="POST">
-  <div>
-    Username or E-mail Address: <input name="login" required>
-  </div>
-  <div>
-    Password: <input name="password" type="password" required>
-  </div>
-  <input type="submit" value="Log In">
-</form>
+<div class="login-container">
+  <h1>Login</h1>
+  <form action="/login" method="POST">
+    <div>
+      Username or E-mail Address: <input name="login" required>
+    </div>
+    <div>
+      Password: <input name="password" type="password" required>
+    </div>
+    <input class="submit-button" type="submit" value="Log In">
+  </form>
+</div>
 
 <%- include ../partials/footer.ejs %>

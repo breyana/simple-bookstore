@@ -1,31 +1,32 @@
 <%- include ../partials/header.ejs %>
-
-<a href="/create"><button type="button">Add new book</button></a>
-
-<h1>Change User Permissions</h1>
-<form method="POST" action="/admin/permissions?_method=PUT">
-  <% if (message) { %>
-    <div class="message">
-      <%=message%>
-    </div>
-  <% } %>
-  <% if (errorMessage) { %>
-    <div class="error">
-      <%=errorMessage%>
-    </div>
-  <% } %>
-  <div>
-    Username/E-mail: <input name="login">
+<div class="admin-page-container">
+  <div class="admin-page-form">
+    <h1>Change User Permissions</h1>
+    <form method="POST" action="/admin/permissions?_method=PUT">
+      <% if (message) { %>
+        <div class="message">
+          <%=message%>
+        </div>
+      <% } %>
+      <% if (errorMessage) { %>
+        <div class="error">
+          <%=errorMessage%>
+        </div>
+      <% } %>
+      <div>
+        Username/E-mail: <input name="login">
+      </div>
+      <div>
+        Role:
+        <select name="role">
+          <option value="admin">Admin</option>
+          <option value="clerk">Clerk</option>
+          <option value="reader">Reader</option>
+        </select>
+      </div>
+      <input class="submit-button" type="submit" value="Update User">
+    </form>
   </div>
-  <div>
-    Role:
-    <select name="role">
-      <option value="admin">Admin</option>
-      <option value="clerk">Clerk</option>
-      <option value="reader">Reader</option>
-    </select>
-  </div>
-  <input type="submit" value="Update User">
-
+</div>
 
 <%- include ../partials/footer.ejs %>
