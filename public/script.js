@@ -42,9 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const lastNameInputs = document.querySelectorAll('.last_name')
         firstNameInputs.forEach(function (input, index) {
           input.name = `firstName${index}`
+          input.required = true
         })
         lastNameInputs.forEach(function (input, index) {
           input.name = `lastName${index}`
+          input.required = true
         })
       } else {
         const genreInputs = document.querySelectorAll('.genre')
@@ -226,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const currentIndex = previousGenreNumber + 1
       const parent = event.target.parentElement
       const genreDiv = document.createElement('div')
-      genreDiv.innerHTML = `<input list="genres" class="genre" name="genre${currentIndex}">`
+      genreDiv.innerHTML = `<input list="genres" class="genre" name="genre${currentIndex}" required>`
       const removeButton = document.createElement('button')
       removeButton.innerText = 'X'
       removeButton.className = 'remove-genre-input'
@@ -245,8 +247,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const parent = event.target.parentElement
       const authorDiv = document.createElement('div')
       authorDiv.innerHTML = `
-          First Name: <input class="first_name" name="firstName${previousAuthorNumber+1}">
-          Last Name: <input class="last_name" name="lastName${previousAuthorNumber+1}">
+          First Name: <input class="first_name" name="firstName${previousAuthorNumber+1}" required>
+          Last Name: <input class="last_name" name="lastName${previousAuthorNumber+1}" required>
           <button type="button" class="remove-author-input" id="remove-author-input${currentIndex}">X</button>`
       parent.insertBefore(authorDiv, event.target)
       const removeButton = document.querySelector(`#remove-author-input${currentIndex}`)
