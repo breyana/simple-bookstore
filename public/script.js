@@ -41,10 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const firstNameInputs = document.querySelectorAll('.first_name')
         const lastNameInputs = document.querySelectorAll('.last_name')
         firstNameInputs.forEach(function (input, index) {
-          input.name = `first_name${index}`
+          input.name = `firstName${index}`
         })
         lastNameInputs.forEach(function (input, index) {
-          input.name = `last_name${index}`
+          input.name = `lastName${index}`
         })
       } else {
         const genreInputs = document.querySelectorAll('.genre')
