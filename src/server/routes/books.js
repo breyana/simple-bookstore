@@ -28,11 +28,19 @@ router.get('/create', (request, response) => {
 
 router.post('/create', (request, response) => {
   if (request.session.role === 'admin') {
-    let price;
+    let price
+    let imageUrl = request.body.image
+    if (!imageUrl.startsWith('http') && !(imageUrl.endsWith('.jpg') || imageUrl.endsWith('.png'))) {
+      let message = {
+          invalidImage: 'Please input a valid image',
+      }
+      response.render('books/create', { message })
+      return;
+    }
     if (request.body.price.includes('$')) {
-      price = request.body.price.replace(/\$/, '');
+      price = request.body.price.replace(/\$/, '')
     } else {
-      price = request.body.price;
+      price = request.body.price
     }
     const compiledBook = {}
     compiledBook.title = request.body.title
