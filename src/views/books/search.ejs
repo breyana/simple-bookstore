@@ -1,0 +1,45 @@
+<%- include ../partials/header.ejs %>
+
+<% if(books){ %>
+  <ul class="book-list" id="search-books">
+    <% books.forEach(function(book) { %>
+      <li>
+        <a href="/books/<%=book.id%>">
+          <img class="book-list-image" src=<%=book.img_url%>>
+        </a>
+        <div class="book-info-container">
+          <div class="search-title">
+            <a href="/books/<%=book.id%>">
+              <%=book.title%>
+            </a>
+          </div>
+          <div class="search-author">
+            <%=book.first_name%> <%=book.last_name%>
+          </div>
+          <div class="search-price">
+            $<%=book.price%>
+          </div>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+  <div class="page-links">
+    <% offset = parseInt(offset)%>
+    <% if (offset >= 10) { %>
+      <% let previous = offset - 10 %>
+      <div id="search-prev-page">
+        <a href="search?search=<%=searchTerm%>&amp;start=<%=previous%>">
+          Prev Page
+        </a>
+      </div>
+    <% } %>
+    <% offset += 10 %>
+    <div id="search-next-page">
+      <a href="search?search=<%=searchTerm%>&amp;start=<%=offset%>">
+        Next Page
+      </a>
+    </div>
+  </div>
+<% } %>
+
+<%- include ../partials/footer.ejs %>

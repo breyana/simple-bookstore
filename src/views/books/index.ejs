@@ -1,0 +1,13 @@
+<%- include ../partials/header.ejs %>
+
+<ul class="book-list" id="homepage-books">
+  <% if(books){ %>
+    <% books.forEach(function(book) { %>
+      <div class="book-list-item-container">
+        <li class="book-list-item"><a href='/books/<%=book.id%>'><img class="book-list-image" src=<%=book.img_url%>></a></li>
+      </div>
+    <% }) %>
+  <% } %>
+</ul>
+
+<%- include ../partials/footer.ejs %>

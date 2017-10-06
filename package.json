@@ -1,0 +1,34 @@
+{
+  "name": "simple-bookstore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:init": "psql < seeds/schema.sql && psql < seeds/load_data.sql && psql simple_bookstore < node_modules/connect-pg-simple/table.sql",
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/breyana/simple-bookstore.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/breyana/simple-bookstore/issues"
+  },
+  "homepage": "https://github.com/breyana/simple-bookstore#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.1",
+    "connect-pg-simple": "^4.2.1",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "express-session": "^1.15.6",
+    "method-override": "^2.3.9",
+    "nodemon": "^1.12.1",
+    "pg-promise": "^6.7.1"
+  }
+}

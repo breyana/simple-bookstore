@@ -1,0 +1,33 @@
+<div class="modal-overlay"></div>
+<div class="modal">
+  <span class="close-cart">&times;</span>
+  <div class="modal-inner">
+    <h1>Shopping Cart</h1>
+    <ul class="cart-contents">
+      <li class="modal-header-container">
+        <span class="modal-header" id="modal-header-title">Title</span>
+        <span class="modal-header" id="modal-header-quantity">Quantity</span>
+        <span class="modal-header" id="modal-header-price">Price</span>
+      </li>
+      <% if (cart) { %>
+        <% cart.forEach(function(item) {%>
+          <li class="item">
+            <span class="cart-book-title">
+              <%=item.title%>
+            </span>
+            <input class="cart-book-count" type="number" id='book<%=item.id%>' value=<%=item.quantity%>>
+            </input>
+            <span class="cart-book-price">
+              $<%=item.price%>
+            </span>
+            <div class="remove-from-cart">
+              &#10006
+            </div>
+        <% }) %>
+      <% } %>
+    </ul>
+    <div class="total-container">
+      <span class="total">Total: $0.00</span>
+    </div>
+  </div>
+</div>

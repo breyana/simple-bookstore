@@ -1,0 +1,44 @@
+<%- include ../partials/header.ejs %>
+
+  <% if (book) { %>
+    <div id="single-book-main-info-container">
+      <img id="single-book-img" src=<%=book.img_url%>>
+      <div id="single-book-info">
+        <div id="single-book-title"><%=book.title%></div>
+        <div id="single-book-author">
+          By
+          <% book.authors.forEach(function(author, index) { %>
+            <% if(index > 0) { %>
+              <span>& <%=author.first_name%> <%=author.last_name%></span>
+            <% } else { %>
+              <span><%=author.first_name%> <%=author.last_name%></span>
+            <% } %>
+          <% }) %>
+        </div>
+        <div id="single-book-genres">
+          Genre(s):
+          <% book.genres.forEach(function(genre, index) { %>
+            <% if(index > 0) { %>
+              <span>& <%=genre%></span>
+            <% } else { %>
+              <span><%=genre%></span>
+            <% } %>
+          <% }) %>
+        </div>
+      </div>
+      <div id="single-book-purchase-info">
+        <div id="single-book-price">$<%=book.price%></div>
+        <div id="single-book-in-stock">In Stock: <%=book.in_stock%></div>
+        <button id="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+      <div id="single-book-isbn-publisher">
+        <div id="single-book-isbn">ISBN: <%=book.isbn%></div>
+        <div id="single-book-publisher"><%=book.publisher%></div>
+      </div>
+    <% if (role === 'clerk' || role === 'admin') { %>
+      <a href='/books/<%=book.id%>/edit'><button id="single-book-edit-button" type="button">Edit Book</button></a>
+    <% } %>
+  <% } %>
+
+<%- include ../partials/footer.ejs %>

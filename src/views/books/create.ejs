@@ -1,0 +1,52 @@
+<%- include ../partials/header.ejs %>
+<div class="create-book-container">
+  <div class="create-book-form">
+    <h1>Create Book</h1>
+    <% if (message) { %>
+      <div class="error">
+        <%=message.invalidImage%>
+      </div>
+    <% } %>
+    <form method="POST" action="/books/create">
+      <div>
+        Title:
+        <input name="title" required>
+      </div>
+      <div>
+        Image URL:
+        <input name="imgUrl" required>
+      </div>
+      <div>
+        Price:
+        $<input name="price" required>
+      </div>
+      <div>
+        In Stock:
+        <input name="inStock" required>
+      </div>
+      <div>
+        ISBN:
+        <input name="isbn" required>
+      </div>
+      <div>
+        Publisher:
+        <input name="publisher" required>
+      </div>
+      <h3>Author</h3>
+      <div>
+        First Name: <input class="first_name" name="firstName0" required> Last Name: <input class="last_name" name="lastName0" required>
+      </div>
+      <button type="button" class="add-author-input">Add Author</button>
+      <h3>Genres</h3>
+      <div>
+        <input class="genre" name="genre0" required>
+      </div>
+      <button type="button" class="add-genre-input" required>Add Genre</button>
+      <div>
+        <input class="submit-button" type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include ../partials/footer.ejs %>
